@@ -1,9 +1,11 @@
 import streamlit as st
 from groq import Groq
 
-# Initialize session state for chat history
+# Initialize session state for chat history and user input
 if 'chat_history' not in st.session_state:
     st.session_state['chat_history'] = []
+if 'user_input' not in st.session_state:
+    st.session_state['user_input'] = ""
 
 def llma(user_input):
     client = Groq(
@@ -36,20 +38,19 @@ def llma(user_input):
         st.error(f"Error: {e}")
 
 # UI for the chatbot
-# UI for the chatbot
 st.title("Chat-bot")
 
 selected_model = st.selectbox("Select Model", ["LLMA"])
-user_input = st.text_input("Enter your message", key="input")  # Keep the key for the input
+# Use the separate session state variable for user input
+user_input = st.text_input("Enter your message", value=st.session_state['user_input'], key="input")  
 submit = st.button("Submit")
 
 if selected_model == "LLMA":
     if submit and user_input:
         with st.spinner("Processing..."):
             llma(user_input)
-            # Instead of clearing session state, just reset the input field:
-            st.session_state["input"] = ""  # Clear the input after submission
-            st.experimental_rerun()  # Rerun the app to update the input
+            # Clear the input after submission by updating the session state variable
+            st.session_state['user_input'] = ""  # Clear the input value
 
 # Add margin between the input and history
 st.markdown("<hr style='margin-top: 40px;'>", unsafe_allow_html=True)
