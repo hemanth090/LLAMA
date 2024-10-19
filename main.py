@@ -36,17 +36,20 @@ def llma(user_input):
         st.error(f"Error: {e}")
 
 # UI for the chatbot
+# UI for the chatbot
 st.title("Chat-bot")
 
 selected_model = st.selectbox("Select Model", ["LLMA"])
-user_input = st.text_input("Enter your message", key="input")
+user_input = st.text_input("Enter your message", key="input")  # Keep the key for the input
 submit = st.button("Submit")
 
 if selected_model == "LLMA":
     if submit and user_input:
         with st.spinner("Processing..."):
             llma(user_input)
-            st.session_state.input = ""  # Clear the input after submission
+            # Instead of clearing session state, just reset the input field:
+            st.session_state["input"] = ""  # Clear the input after submission
+            st.experimental_rerun()  # Rerun the app to update the input
 
 # Add margin between the input and history
 st.markdown("<hr style='margin-top: 40px;'>", unsafe_allow_html=True)
