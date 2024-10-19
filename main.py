@@ -8,7 +8,7 @@ if 'chat_history' not in st.session_state:
 
 def llma():
     client = Groq(
-            api_key="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",
+            api_key="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",
             )
 
     # Send the user's input to the chatbot
