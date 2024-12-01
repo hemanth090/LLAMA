@@ -45,7 +45,7 @@ selected_model = st.selectbox("Select Model", ["LLMA"])
 user_input = st.text_input("Enter your message", value=st.session_state['user_input'], key="input")  
 submit = st.button("Submit")
 
-if selected_model == "LLMA":
+if selected_model == "LLAMA":
     if submit and user_input:
         with st.spinner("Processing..."):
             llma(user_input)
